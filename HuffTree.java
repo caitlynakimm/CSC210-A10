@@ -2,10 +2,14 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Represents a Huffman tree for character encoding and decoding
+ */
 public class HuffTree extends BinaryTree<Character> {
+    
     /**
-     * Creates a leaf node with given data
-     * @param data animal name or question for this node
+     * Creates a leaf node with character data
+     * @param data character stored in this node
      */
     public HuffTree(Character data) {
         super(data);
@@ -13,7 +17,7 @@ public class HuffTree extends BinaryTree<Character> {
 
     /**
      * Creates branch node with left and right children
-     * @param data question for this node
+     * @param data character for this node
      * @param left left child of node
      * @param right right child of node
      */
@@ -24,7 +28,7 @@ public class HuffTree extends BinaryTree<Character> {
     }
 
     /**
-     * Copy constructor makes deep copy of tree
+     * Copy constructor makes deep copy of existing Huffman tree
      * @param tree tree to copy
      */
     public HuffTree(HuffTree tree) {
@@ -34,16 +38,16 @@ public class HuffTree extends BinaryTree<Character> {
     }
 
     /**
-     * Gets left child as a HuffTree
-     * @return left child node
+     * Gets left child node
+     * @return left child as HuffTree
      */
     public HuffTree getLeft() {
         return (HuffTree)super.getLeft();
     }
 
     /**
-     * Gets right child as a HuffTree
-     * @return right child node
+     * Gets right child node
+     * @return right child as HuffTree
      */
     public HuffTree getRight() {
         return (HuffTree)super.getRight();
@@ -76,7 +80,7 @@ public class HuffTree extends BinaryTree<Character> {
     }
 
     /**
-     * Navigates through tree following path consisting of 0/1 directions
+     * Navigates through tree following binary path directions
      * @param path string of '0' (left) and '1' (right) characters
      * @return node at end of path
      * @throws IllegalArgumentException for invalid paths
@@ -104,18 +108,18 @@ public class HuffTree extends BinaryTree<Character> {
     }
 
     /**
-     * Reads a huff tree from a file and reconstructs tree structure
-     * @param filename file to read from
+     * Reads a Huffman tree from a file and reconstructs tree structure
+     * @param filename file to that contains tree code definitions
      * @return root node of reconstructed tree
      * @throws IOException if file reading fails or format is invalid
      */
     public static HuffTree readHuffTree(String filename) throws IOException {
         HuffTree root = new HuffTree((Character) null); //create root with null character
         
-        try(BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
             
-            while((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 line = line.trim();
                 if (line.isEmpty()) continue;
 
@@ -125,7 +129,7 @@ public class HuffTree extends BinaryTree<Character> {
                 }
                 String path = parts[0];
                 int asciiValue = Integer.parseInt(parts[1]);
-                char character = (char) asciiValue;
+                char character = (char) asciiValue; //converts ASCII value to the actual character
 
                 //traverse and create tree based on path
                 HuffTree current = root;

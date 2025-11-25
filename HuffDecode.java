@@ -1,6 +1,16 @@
 import java.util.Scanner;
 
+/**
+ * Decodes Huffman-encoded text using a Huffman tree
+ * Reads encoded bits from input and outputs decoded text
+ */
 public class HuffDecode {
+
+    /**
+     * Decodes encoded bit string using Huffman tree traversal
+     * @param tree tree used for decoding
+     * @param encodedBits string of '0' and '1' characters representing encoded text
+     */
     public static void decodeMessage(HuffTree tree, String encodedBits) {
         HuffTree current = tree;
 
@@ -23,6 +33,11 @@ public class HuffDecode {
         }
     }
 
+    /**
+     * Main method for Huffman decoding program
+     * @param args command line arguments (codeFile)
+     * @throws IOException if input/output operations fail
+     */
     public static void main(String[] args) {
         if (args.length < 1) { //when user doesn't provide code file
             System.err.println("User didn't provide code file");
@@ -31,7 +46,7 @@ public class HuffDecode {
 
         try {
             String codeFilename = args[0]; //first argument is code file
-            HuffTree tree = HuffTree.readHuffTree(codeFilename);
+            HuffTree huffmanTree = HuffTree.readHuffTree(codeFilename);
 
             StringBuilder encodedBits = new StringBuilder();
             Scanner scanner = new Scanner(System.in);
@@ -40,7 +55,7 @@ public class HuffDecode {
             }
             scanner.close();
 
-            decodeMessage(tree, encodedBits.toString()); //decode encodedBits using Huffman tree via decodeMessage method
+            decodeMessage(huffmanTree, encodedBits.toString()); //decode encodedBits using Huffman tree via decodeMessage method
             //Secret message from encoded.txt is: Rutabaga 
         } catch (Exception e) {
             System.err.println("An error occured: " + e.getMessage());
